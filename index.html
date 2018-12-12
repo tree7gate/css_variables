@@ -22,9 +22,24 @@
 
   <style>
 
-    /*
-      misc styles, nothing to do with CSS variables
-    */
+    /* :root represents the <html> element, identical to the html selector
+    except that its specificity is higher */
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter:blur(var(--blur));
+
+    }
+
+    .hl {
+      color: var(--base);
+    }
 
     body {
       text-align: center;
@@ -45,6 +60,19 @@
   </style>
 
   <script>
+
+    const inputs = document.querySelectorAll('.controls input');
+
+    function handleUpdate(){
+      const suffix = this.dataset.sizing || '';
+      // console.log(suffix)
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+      // document.documentElement returns the root element of the document. i.e. <html>
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
   </script>
 
 </body>
